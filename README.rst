@@ -56,3 +56,25 @@ permission, to delete log entries from within the admin interface.
 
 This disables admin log entries so that they are no longer created by the
 Django framework or viewable from the within the admin interface.
+
+
+Development
+===========
+
+From the local project directory, activate the virtual environment and install the development requirements:
+
+.. code-block:: bash
+
+    pip install -r requirements_dev.txt
+
+To run tests for all supported Python and Django versions using tox:
+
+.. code-block:: bash
+
+    tox
+
+To run tests for specific versions e.g. Python 3.8 and Django 3.0:
+
+.. code-block:: bash
+
+    tox -e py38-django30
