@@ -1,0 +1,28 @@
+language: python
+
+python:
+  - "3.5"
+  - "3.6"
+  - "3.7"
+  - "3.8"
+
+cache: pip
+
+install:
+  - pip install codecov tox-travis
+
+script:
+  - tox
+
+after_success:
+  - codecov
+
+deploy:
+    provider: pypi
+    user: $PYPI_USER
+    password: $PYPI_PASSWORD
+    server: $PYPI_SERVER
+    distributions: "sdist bdist_wheel"
+    skip_existing: true
+    on:
+        tags: true
