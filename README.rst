@@ -1,0 +1,58 @@
+=================
+Django Admin Logs
+=================
+
+Log entries are automatically created by the Django framework whenever a user
+adds, changes or deletes objects through the admin interface.
+
+**Django Admin Logs** is a package that allows you to either view the admin
+log entries from within the admin interface, or to disable them entirely.
+
+
+Requirements
+============
+
+* Python 3.5+
+* Django 2.1+
+
+
+Installation
+============
+
+Install the package from PyPI:
+
+.. code-block:: bash
+
+    pip install django-admin-logs
+
+Then add it to your ``INSTALLED_APPS`` in the ``settings`` file:
+
+.. code-block:: python
+
+    INSTALLED_APPS = (
+        ...
+        'django_admin_logs',
+        ...
+    )
+
+
+Configuration
+=============
+
+By default, **Django Admin Logs** enables log entries to be viewed from within
+the admin interface but does not allow them to be deleted. Either of these
+options can be configured by adding the following to your ``settings`` file.
+
+.. code-block:: python
+
+    DJANGO_ADMIN_LOGS_DELETABLE = True
+
+This allows super users, or any staff users with the delete_logentry
+permission, to delete log entries from within the admin interface.
+
+.. code-block:: python
+
+    DJANGO_ADMIN_LOGS_ENABLED = False
+
+This disables admin log entries so that they are no longer created by the
+Django framework or viewable from the within the admin interface.

@@ -1,0 +1,27 @@
+# https://editorconfig.org/
+
+root = true
+
+[*]
+indent_style = space
+indent_size = 4
+insert_final_newline = true
+trim_trailing_whitespace = true
+end_of_line = lf
+charset = utf-8
+
+# Docstrings and comments use max_line_length = 79
+[*.py]
+max_line_length = 119
+
+# Use 2 spaces for HTML and JSON files
+[*.{html,json}]
+indent_size = 2
+
+# Makefiles use tabs for indentation
+[Makefile]
+indent_style = tab
+
+# Batch files use tabs for indentation
+[*.bat]
+indent_style = tab
