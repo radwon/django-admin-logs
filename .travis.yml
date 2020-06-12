@@ -18,11 +18,11 @@ after_success:
   - codecov
 
 deploy:
-    provider: pypi
-    user: $PYPI_USER
-    password: $PYPI_PASSWORD
-    server: $PYPI_SERVER
-    distributions: "sdist bdist_wheel"
-    skip_existing: true
-    on:
-        tags: true
+  provider: pypi
+  user: $PYPI_USER
+  password: $PYPI_PASSWORD
+  server: $PYPI_SERVER
+  distributions: "sdist bdist_wheel"
+  skip_existing: true
+  on:
+    tags: true
