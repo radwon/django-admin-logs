@@ -13,7 +13,9 @@ class DjangoAdminLogsConfig(AppConfig):
     def ready(self):
         # Check if admin logs have been disabled
         if DJANGO_ADMIN_LOGS_ENABLED is False:
-            from .models import NoLogEntryManager
             from django.contrib.admin.models import LogEntry
+
+            from .models import NoLogEntryManager
+
             # Change the model manager to one that doesn't log
             LogEntry.objects = NoLogEntryManager(LogEntry)
