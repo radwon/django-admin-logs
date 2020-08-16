@@ -1,7 +1,7 @@
 Changelog
 =========
 
-Unreleased (TBA)
+1.0.1 (2020-08-16)
 ------------------
 * Added support for Django 3.1
 
