@@ -1,6 +1,11 @@
 Changelog
 =========
 
+Unreleased (TBA)
+------------------
+* Added support for Django 3.2 and Python 3.9
+* Dropped support for Django 2.1 and Python 3.5
+
 1.0.1 (2020-08-16)
 ------------------
 * Added support for Django 3.1

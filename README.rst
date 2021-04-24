@@ -21,8 +21,8 @@ log entries from within the admin interface, or to disable them entirely.
 Requirements
 ============
 
-* Python 3.5+
-* Django 2.1+
+* Python 3.6+
+* Django 2.2+
 
 
 Installation
@@ -64,7 +64,7 @@ permission, to delete log entries from within the admin interface.
     DJANGO_ADMIN_LOGS_ENABLED = False
 
 This disables admin log entries so that they are no longer created by the
-Django framework or viewable from the within the admin interface.
+Django framework or viewable from within the admin interface.
 
 
 Development
@@ -76,14 +76,20 @@ From the local project directory, activate the virtual environment and install t
 
     pip install -r requirements_dev.txt
 
+To run tests for the installed version of Python and Django using pytest:
+
+.. code-block:: bash
+
+    pytest
+
 To run tests for all supported Python and Django versions using tox:
 
 .. code-block:: bash
 
     tox
 
-To run tests for specific versions e.g. Python 3.8 and Django 3.0:
+To run tests for specific versions e.g. Python 3.9 and Django 3.2:
 
 .. code-block:: bash
 
-    tox -e py38-django30
+    tox -e py39-django32

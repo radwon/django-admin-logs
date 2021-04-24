@@ -3,6 +3,7 @@ from django.conf import settings
 
 def pytest_configure():
     settings.configure(
+        SECRET_KEY='TEST_KEY',
         ROOT_URLCONF='tests.urls',
         INSTALLED_APPS=[
             'django.contrib.sessions',

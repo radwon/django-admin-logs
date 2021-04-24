@@ -18,8 +18,9 @@ class LogEntryAdminTest(TestCase):
     """Tests the LogEntry Model Admin."""
 
     @classmethod
-    def setUpTestData(cls):
-        """"Set up once for all tests """
+    def setUpClass(cls):
+        """Set up once for all tests."""
+        super().setUpClass()
         cls.logentry_admin = LogEntryAdmin(LogEntry, AdminSite())
         cls.admin_user = User.objects.create_superuser(
             'admin', 'admin@localhost', 'password',
