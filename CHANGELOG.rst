@@ -1,7 +1,7 @@
 Changelog
 =========
 
-Unreleased (TBA)
+1.0.2 (2021-04-24)
 ------------------
 * Added support for Django 3.2 and Python 3.9
 * Dropped support for Django 2.1 and Python 3.5
