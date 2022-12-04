@@ -1,6 +1,10 @@
 Changelog
 =========
 
+1.1.0 (TBC)
+------------------
+* Only display content types to filter that actually have a related log entry.
+
 1.0.2 (2021-04-24)
 ------------------
 * Added support for Django 3.2 and Python 3.9

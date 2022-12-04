@@ -19,8 +19,9 @@ class LogEntryAdmin(admin.ModelAdmin):
         'action_time', 'user', 'action_message', 'content_type', 'object_link',
     )
     list_filter = (
+        'action_flag',
+        ('content_type', admin.RelatedOnlyFieldListFilter),
         ('user', admin.RelatedOnlyFieldListFilter),
-        'action_flag', 'content_type',
     )
     search_fields = (
         'object_repr', 'change_message',
@@ -63,13 +64,13 @@ class LogEntryAdmin(admin.ModelAdmin):
         return DJANGO_ADMIN_LOGS_DELETABLE and super().has_delete_permission(request, obj)
 
     # Prevent changes to log entries creating their own log entries!
-    def log_addition(self, request, object, message):
+    def log_addition(self, request, obj, message):
         pass
 
-    def log_change(self, request, object, message):
+    def log_change(self, request, obj, message):
         pass
 
-    def log_deletion(self, request, object, object_repr):
+    def log_deletion(self, request, obj, object_repr):
         pass
 
 
