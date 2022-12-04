@@ -5,9 +5,6 @@ Django Admin Logs
 .. image:: https://img.shields.io/pypi/v/django-admin-logs.svg
    :target: https://pypi.python.org/pypi/django-admin-logs
 
-.. image:: https://img.shields.io/travis/radwon/django-admin-logs.svg
-   :target: https://travis-ci.org/radwon/django-admin-logs
-
 .. image:: https://img.shields.io/codecov/c/github/radwon/django-admin-logs.svg
    :target: https://codecov.io/gh/radwon/django-admin-logs
 
