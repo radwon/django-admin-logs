@@ -9,49 +9,95 @@ from django.contrib.auth import get_user_model
 from django.contrib.contenttypes.models import ContentType
 from django.test import TestCase
 
-from django_admin_logs.apps import DjangoAdminLogsConfig
-
 User = get_user_model()
 
 
-class LogEntryModelTest(TestCase):
-    """Tests the LogEntry Model."""
+class LogEntryManagerTest(TestCase):
+    """Tests the LogEntry Model Manager."""
 
-    def create_log_entry(self):
-        # Re-run the app config ready() method to use the latest settings
-        app_config = apps.get_app_config(DjangoAdminLogsConfig.name)
-        app_config.ready()
-        # Create a log entry action for a changed user
-        user = User.objects.create_user("user", "user@localhost", "password")
-        content_type_pk = ContentType.objects.get_for_model(User).pk
-        log_entry = LogEntry.objects.log_action(
-            user.pk,
-            content_type_pk,
-            user.pk,
-            repr(user),
-            CHANGE,
-            change_message="Changed user",
-        )
-        return log_entry
+    @classmethod
+    def setUpTestData(cls):
+        """Set up test data once for all tests."""
+        cls.user = User.objects.create_user("user", "user@localhost", "password")
+        cls.content_type = ContentType.objects.get_for_model(User)
 
-    @mock.patch(DjangoAdminLogsConfig.__module__ + ".DJANGO_ADMIN_LOGS_ENABLED", True)
+    @mock.patch("django_admin_logs.settings.DJANGO_ADMIN_LOGS_ENABLED", True)
     def test_log_action(self):
         """Test that a log entry is created when admin logs are enabled."""
+        # Re-run the app config ready() method to use the test settings
+        apps.get_app_config("django_admin_logs").ready()
         # Ensure there are no log entries yet
         self.assertEqual(LogEntry.objects.count(), 0)
         # Create a log entry when admin logs are enabled
-        log_entry = self.create_log_entry()
+        log_entry = LogEntry.objects.log_action(
+            self.user.pk, self.content_type.pk, self.user.pk, repr(self.user), CHANGE
+        )
         # Ensure the log entry was created for the action
-        self.assertEqual(log_entry, LogEntry.objects.latest("pk"))
+        self.assertEqual(log_entry, LogEntry.objects.first())
         self.assertEqual(LogEntry.objects.count(), 1)
 
-    @mock.patch(DjangoAdminLogsConfig.__module__ + ".DJANGO_ADMIN_LOGS_ENABLED", False)
+
+class ChangedLogEntryManagerTest(TestCase):
+    """Tests the LogEntry Model Manager that ignores logs with no changes."""
+
+    @classmethod
+    def setUpTestData(cls):
+        """Set up test data once for all tests."""
+        cls.user = User.objects.create_user("user", "user@localhost", "password")
+        cls.content_type = ContentType.objects.get_for_model(User)
+
+    @mock.patch("django_admin_logs.settings.DJANGO_ADMIN_LOGS_IGNORE_UNCHANGED", True)
+    def test_unchanged_log_action(self):
+        """Test that logs are ignored if there are no changes."""
+        # Re-run the app config ready() method to use the test settings
+        apps.get_app_config("django_admin_logs").ready()
+        # Ensure there are no log entries yet
+        self.assertEqual(LogEntry.objects.count(), 0)
+        # Attempt to create a log entry with no changes (in the message)
+        log_entry = LogEntry.objects.log_action(
+            self.user.pk,
+            self.content_type.pk,
+            self.user.pk,
+            repr(self.user),
+            CHANGE,
+            "",  # No change message
+        )
+        # Ensure there was no log entry created for the action
+        self.assertEqual(log_entry, None)
+        self.assertEqual(LogEntry.objects.count(), 0)
+        # Ensure a log entry with a change message is still created
+        log_entry = LogEntry.objects.log_action(
+            self.user.pk,
+            self.content_type.pk,
+            self.user.pk,
+            repr(self.user),
+            CHANGE,
+            "Changed user",
+        )
+        self.assertEqual(log_entry, LogEntry.objects.first())
+        self.assertEqual(LogEntry.objects.count(), 1)
+
+
+class NoLogEntryManagerTest(TestCase):
+    """Tests the No LogEntry Model Manager."""
+
+    @classmethod
+    def setUpTestData(cls):
+        """Set up test data once for all tests."""
+        cls.user = User.objects.create_user("user", "user@localhost", "password")
+        cls.content_type = ContentType.objects.get_for_model(User)
+
+    @mock.patch("django_admin_logs.settings.DJANGO_ADMIN_LOGS_ENABLED", False)
     def test_no_log_action(self):
         """Test that a log entry is not created when admin logs are disabled."""
+        # Re-run the app config ready() method to use the test settings
+        apps.get_app_config("django_admin_logs").ready()
         # Ensure there are no log entries yet
         self.assertEqual(LogEntry.objects.count(), 0)
         # Attempt to create a log entry when admin logs are disabled
-        log_entry = self.create_log_entry()
+        log_entry = LogEntry.objects.log_action(
+            self.user.pk, self.content_type.pk, self.user.pk, repr(self.user), CHANGE
+        )
         # Ensure there was no log entry created for the action
         self.assertEqual(log_entry, None)
         self.assertEqual(LogEntry.objects.count(), 0)

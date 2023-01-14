@@ -3,6 +3,7 @@ Changelog
 
 Unreleased (TBD)
 ------------------
+* Add option to ignore logs where no changes were made.
 * Add link to log entry user in admin list of log entries.
 
 1.1.0 (2023-12-18)

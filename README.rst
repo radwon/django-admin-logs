@@ -63,6 +63,14 @@ permission, to delete log entries from within the admin interface.
 This disables admin log entries so that they are no longer created by the
 Django framework or viewable from within the admin interface.
 
+By default, Django creates log entries with the message "No fields changed"
+when an unchanged object is saved in the admin interface. To prevent such log
+entries from being created use the following setting:
+
+.. code-block:: python
+
+    DJANGO_ADMIN_LOGS_IGNORE_UNCHANGED = True
+
 
 Development
 ===========
