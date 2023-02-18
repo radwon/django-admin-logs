@@ -71,7 +71,7 @@ From the local project directory, activate the virtual environment and install t
 
 .. code-block:: bash
 
-    pip install -r requirements_dev.txt
+    pip install -e .[dev]
 
 To run tests for the installed version of Python and Django using pytest:
 

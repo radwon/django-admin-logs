@@ -1,0 +1,46 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "django-admin-logs"
+description = "View, delete or disable Django admin log entries."
+version = "1.0.2"
+authors = [
+    { name="Adam Radwon" },
+]
+license = { file = "LICENSE" }
+readme = "README.rst"
+keywords = ["django", "admin", "logs"]
+requires-python = ">=3.6"
+dependencies = [
+    "Django>=2.2"
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Environment :: Web Environment",
+    "Framework :: Django",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+
+[project.urls]
+Homepage = "https://github.com/radwon/django-admin-logs"
+Changelog = "https://github.com/radwon/django-admin-logs/CHANGELOG.rst"
+
+[project.optional-dependencies]
+dev = [
+    "build",
+    "coverage",
+    "Django",
+    "flake8",
+    "isort",
+    "pytest",
+    "pytest-cov",
+    "pytest-django",
+    "tox",
+    "twine",
+]
