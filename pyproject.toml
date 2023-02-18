@@ -33,6 +33,7 @@ Changelog = "https://github.com/radwon/django-admin-logs/CHANGELOG.rst"
 
 [project.optional-dependencies]
 dev = [
+    "black",
     "build",
     "coverage",
     "Django",

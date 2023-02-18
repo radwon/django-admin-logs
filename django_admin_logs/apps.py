@@ -7,8 +7,8 @@ from .settings import DJANGO_ADMIN_LOGS_ENABLED
 
 
 class DjangoAdminLogsConfig(AppConfig):
-    name = 'django_admin_logs'
-    verbose_name = 'Django Admin Logs'
+    name = "django_admin_logs"
+    verbose_name = "Django Admin Logs"
 
     def ready(self):
         # Check if admin logs have been disabled

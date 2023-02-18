@@ -22,15 +22,19 @@ class LogEntryModelTest(TestCase):
         app_config = apps.get_app_config(DjangoAdminLogsConfig.name)
         app_config.ready()
         # Create a log entry action for a changed user
-        user = User.objects.create_user('user', 'user@localhost', 'password')
+        user = User.objects.create_user("user", "user@localhost", "password")
         content_type_pk = ContentType.objects.get_for_model(User).pk
         log_entry = LogEntry.objects.log_action(
-            user.pk, content_type_pk, user.pk, repr(user),
-            CHANGE, change_message='Changed user',
+            user.pk,
+            content_type_pk,
+            user.pk,
+            repr(user),
+            CHANGE,
+            change_message="Changed user",
         )
         return log_entry
 
-    @mock.patch(DjangoAdminLogsConfig.__module__ + '.DJANGO_ADMIN_LOGS_ENABLED', True)
+    @mock.patch(DjangoAdminLogsConfig.__module__ + ".DJANGO_ADMIN_LOGS_ENABLED", True)
     def test_log_action(self):
         """Test that a log entry is created when admin logs are enabled."""
         # Ensure there are no log entries yet
@@ -38,10 +42,10 @@ class LogEntryModelTest(TestCase):
         # Create a log entry when admin logs are enabled
         log_entry = self.create_log_entry()
         # Ensure the log entry was created for the action
-        self.assertEqual(log_entry, LogEntry.objects.latest('pk'))
+        self.assertEqual(log_entry, LogEntry.objects.latest("pk"))
         self.assertEqual(LogEntry.objects.count(), 1)
 
-    @mock.patch(DjangoAdminLogsConfig.__module__ + '.DJANGO_ADMIN_LOGS_ENABLED', False)
+    @mock.patch(DjangoAdminLogsConfig.__module__ + ".DJANGO_ADMIN_LOGS_ENABLED", False)
     def test_no_log_action(self):
         """Test that a log entry is not created when admin logs are disabled."""
         # Ensure there are no log entries yet
