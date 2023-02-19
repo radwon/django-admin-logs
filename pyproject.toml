@@ -37,6 +37,7 @@ dev = [
     "build",
     "coverage",
     "Django",
+    "pre-commit",
     "pytest",
     "pytest-cov",
     "pytest-django",

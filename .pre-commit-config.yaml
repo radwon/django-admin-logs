@@ -1,0 +1,13 @@
+repos:
+-   repo: local
+    hooks:
+    -   id: black
+        name: black
+        entry: black
+        language: python
+        types: [python]
+    -   id: ruff
+        name: ruff
+        entry: ruff --no-cache
+        language: python
+        types: [python]
