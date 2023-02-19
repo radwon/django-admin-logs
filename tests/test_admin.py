@@ -49,9 +49,7 @@ class LogEntryAdminTest(TestCase):
         )
         self.assertEqual(
             self.logentry_admin.object_link(log_entry),
-            '<a href="{}">{}</a>'.format(
-                log_entry.get_admin_url(), log_entry.object_repr
-            ),
+            f'<a href="{log_entry.get_admin_url()}">{log_entry.object_repr}</a>',
         )
         # Test that a DELETION log entry returns object without a link
         log_entry.action_flag = DELETION
@@ -71,7 +69,7 @@ class LogEntryAdminTest(TestCase):
         # Ensure a log entry without a change message uses the action flag label
         self.assertEqual(
             self.logentry_admin.action_message(log_entry),
-            "{}.".format(log_entry.get_action_flag_display()),
+            f"{log_entry.get_action_flag_display()}.",
         )
         # Ensure a log entry with a change message is used for the action message
         change_message = "This is a change message"

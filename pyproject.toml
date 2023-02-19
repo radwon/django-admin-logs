@@ -37,11 +37,33 @@ dev = [
     "build",
     "coverage",
     "Django",
-    "flake8",
-    "isort",
     "pytest",
     "pytest-cov",
     "pytest-django",
+    "ruff",
     "tox",
     "twine",
 ]
+
+[tool.coverage.report]
+fail_under = 100
+
+[tool.coverage.run]
+omit = ["*/tests/*", "*__init__.py"]
+
+[tool.ruff]
+ignore = [
+    "E501",  # line length violations (handled by Black)
+]
+line-length = 88  # Same as Black
+select = [
+    "B",  # flake8-bugbear rules
+    "E",  # pycodestyle errors
+    "F",  # pyflakes
+    "I",  # isort (import sorting)
+    "UP", # pyupgrade
+    "W",  # pycodestyle warnings
+]
+
+[tool.pytest.ini_options]
+addopts = "--cov=django_admin_logs"

@@ -56,7 +56,7 @@ class LogEntryAdmin(admin.ModelAdmin):
         change_message = obj.get_change_message()
         # If there is no change message then use the action flag label
         if not change_message:
-            change_message = "{}.".format(obj.get_action_flag_display())
+            change_message = f"{obj.get_action_flag_display()}."
         return change_message
 
     action_message.short_description = "action"
