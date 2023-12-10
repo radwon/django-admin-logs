@@ -14,7 +14,7 @@ readme = "README.rst"
 keywords = ["django", "admin", "logs"]
 requires-python = ">=3.6"
 dependencies = [
-    "Django>=2.2"
+    "Django>=3.2"
 ]
 classifiers = [
     "Development Status :: 5 - Production/Stable",
