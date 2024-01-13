@@ -3,6 +3,7 @@ Django Admin Logs - Model Admin.
 """
 from django.contrib import admin
 from django.contrib.admin.models import LogEntry
+from django.urls import reverse
 from django.utils.html import format_html
 
 from .settings import DJANGO_ADMIN_LOGS_DELETABLE, DJANGO_ADMIN_LOGS_ENABLED
@@ -23,7 +24,7 @@ class LogEntryAdmin(admin.ModelAdmin):
     )
     list_display = (
         "action_time",
-        "user",
+        "user_link",
         "action_message",
         "content_type",
         "object_link",
@@ -38,6 +39,16 @@ class LogEntryAdmin(admin.ModelAdmin):
         "change_message",
     )
 
+    @admin.display(description="user")
+    def user_link(self, obj):
+        """Returns the admin change link to the user object."""
+        admin_url = reverse(
+            f"admin:{obj.user._meta.app_label}_{obj.user._meta.model_name}_change",
+            args=[obj.user.pk],
+        )
+        return format_html('<a href="{}">{}</a>', admin_url, obj.user)
+
+    @admin.display(description="object")
     def object_link(self, obj):
         """Returns the admin link to the log entry object if it exists."""
         admin_url = None if obj.is_deletion() else obj.get_admin_url()
@@ -46,8 +57,7 @@ class LogEntryAdmin(admin.ModelAdmin):
         else:
             return obj.object_repr
 
-    object_link.short_description = "object"
-
+    @admin.display(description="action")
     def action_message(self, obj):
         """
         Returns the action message.
@@ -58,8 +68,6 @@ class LogEntryAdmin(admin.ModelAdmin):
         if not change_message:
             change_message = f"{obj.get_action_flag_display()}."
         return change_message
-
-    action_message.short_description = "action"
 
     def get_queryset(self, request):
         return super().get_queryset(request).prefetch_related("content_type")

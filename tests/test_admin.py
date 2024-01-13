@@ -8,6 +8,7 @@ from django.contrib.admin.sites import AdminSite
 from django.contrib.auth import get_user_model
 from django.contrib.contenttypes.models import ContentType
 from django.test import RequestFactory, TestCase
+from django.urls import reverse
 
 from django_admin_logs.admin import LogEntryAdmin
 
@@ -37,6 +38,24 @@ class LogEntryAdminTest(TestCase):
     def setUp(self):
         """Set up before each test."""
         self.request = RequestFactory().get("/admin/")
+
+    def test_user_link(self):
+        """Test the admin change link to the user object."""
+        log_entry = LogEntry(
+            user=self.admin_user,
+            action_flag=ADDITION,
+            content_type_id=ContentType.objects.get_for_model(User).id,
+            object_id=self.admin_user.id,
+            object_repr=str(self.admin_user),
+        )
+        admin_url = reverse(
+            f"admin:{User._meta.app_label}_{User._meta.model_name}_change",
+            args=[log_entry.user.pk],
+        )
+        self.assertEqual(
+            self.logentry_admin.user_link(log_entry),
+            f'<a href="{admin_url}">{log_entry.user}</a>',
+        )
 
     def test_object_link(self):
         """Test the admin link to the log entry object."""

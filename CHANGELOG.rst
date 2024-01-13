@@ -1,6 +1,10 @@
 Changelog
 =========
 
+Unreleased (TBD)
+------------------
+* Add link to log entry user in admin list of log entries.
+
 1.1.0 (2023-12-18)
 ------------------
 * Only display content types to filter that actually have a related log entry.
