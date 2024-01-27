@@ -1,6 +1,7 @@
 """
 Django Admin Logs - Test Admin.
 """
+
 from unittest import mock
 
 from django.contrib.admin.models import ADDITION, DELETION, LogEntry

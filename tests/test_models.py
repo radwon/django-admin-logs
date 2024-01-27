@@ -1,6 +1,7 @@
 """
 Django Admin Logs - Test Models.
 """
+
 from unittest import mock
 
 from django.apps import apps

@@ -1,6 +1,7 @@
 """
 Django Admin Logs - Settings.
 """
+
 from django.conf import settings
 
 # Determines whether admin logs should be enabled (defaults to True).

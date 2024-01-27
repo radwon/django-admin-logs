@@ -1,6 +1,7 @@
 """
 Django Admin Logs - App Config.
 """
+
 from django.apps import AppConfig
 
 

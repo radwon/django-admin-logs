@@ -1,6 +1,7 @@
 """
 Django Admin Logs - Models.
 """
+
 from django.contrib.admin import models
 
 
