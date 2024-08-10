@@ -18,8 +18,8 @@ log entries from within the admin interface, or to disable them entirely.
 Requirements
 ============
 
-* Python 3.6+
-* Django 3.2+
+* Python 3.8+
+* Django 4.2+
 
 
 Installation
@@ -93,8 +93,8 @@ To run tests for all supported Python and Django versions using tox:
 
     tox
 
-To run tests for specific versions e.g. Python 3.9 and Django 3.2:
+To run tests for specific versions e.g. Python 3.10 and Django 4.2:
 
 .. code-block:: bash
 
-    tox -e py39-django32
+    tox -e py310-django42

@@ -94,7 +94,11 @@ class LogEntryAdmin(admin.ModelAdmin):
     def log_change(self, request, obj, message):
         pass
 
-    def log_deletion(self, request, obj, object_repr):
+    # Deprecated in Django 5.1 to be removed in Django 6.0
+    def log_deletion(self, request, obj, object_repr):  # pragma: no cover
+        pass
+
+    def log_deletions(self, request, queryset):
         pass
 
 

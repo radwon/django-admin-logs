@@ -1,10 +1,15 @@
 Changelog
 =========
 
+Unreleased (TBD)
+------------------
+* Added support for Django 5.1
+* Dropped support for Django 3.2
+
 1.2.0 (2024-03-03)
 ------------------
-* Add option to ignore logs where no changes were made.
-* Add link to log entry user in admin list of log entries.
+* Added option to ignore logs where no changes were made.
+* Added link to log entry user in admin list of log entries.
 
 1.1.0 (2023-12-18)
 ------------------

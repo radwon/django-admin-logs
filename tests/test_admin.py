@@ -4,6 +4,7 @@ Django Admin Logs - Test Admin.
 
 from unittest import mock
 
+import django
 from django.contrib.admin.models import ADDITION, DELETION, LogEntry
 from django.contrib.admin.sites import AdminSite
 from django.contrib.auth import get_user_model
@@ -143,6 +144,11 @@ class LogEntryAdminTest(TestCase):
         query_count = self.logentry_admin.get_queryset(self.request).count()
         self.assertEqual(query_count, 0)
         # Ensure no actions are created for deleting log entries
-        self.logentry_admin.log_deletion(self.request, self.admin_user, "Deleted")
+        if django.VERSION < (5, 1):
+            self.logentry_admin.log_deletion(
+                self.request, self.admin_user, str(self.admin_user)
+            )
+        else:
+            self.logentry_admin.log_deletions(self.request, [self.admin_user])
         query_count = self.logentry_admin.get_queryset(self.request).count()
         self.assertEqual(query_count, 0)

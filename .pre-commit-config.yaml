@@ -8,6 +8,6 @@ repos:
         types: [python]
     -   id: ruff
         name: ruff
-        entry: ruff --no-cache
+        entry: ruff check --no-cache
         language: python
         types: [python]
