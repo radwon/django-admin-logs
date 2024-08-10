@@ -1,7 +1,7 @@
 Changelog
 =========
 
-Unreleased (TBD)
+1.3.0 (2024-08-10)
 ------------------
 * Added support for Django 5.1
 * Dropped support for Django 3.2
