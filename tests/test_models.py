@@ -39,10 +39,12 @@ class LogEntryManagerTest(TestCase):
                 repr(self.user),
                 CHANGE,
             )
-        else:
+        elif django.VERSION < (5, 1, 7):
             log_entry = LogEntry.objects.log_actions(
                 self.user.pk, [self.user], CHANGE, single_object=True
             )
+        else:
+            log_entry = LogEntry.objects.log_actions(self.user.pk, [self.user], CHANGE)
         # Ensure the log entry was created for the action
         self.assertEqual(log_entry, LogEntry.objects.first())
         self.assertEqual(LogEntry.objects.count(), 1)
@@ -76,7 +78,7 @@ class ChangedLogEntryManagerTest(TestCase):
             )
         else:
             log_entry = LogEntry.objects.log_actions(
-                self.user.pk, [self.user], CHANGE, "", single_object=True
+                self.user.pk, [self.user], CHANGE, ""
             )
         # Ensure there was no log entry created for the action
         self.assertEqual(log_entry, None)
@@ -91,9 +93,13 @@ class ChangedLogEntryManagerTest(TestCase):
                 CHANGE,
                 "Changed user",
             )
-        else:
+        elif django.VERSION < (5, 1, 7):
             log_entry = LogEntry.objects.log_actions(
                 self.user.pk, [self.user], CHANGE, "Changed user", single_object=True
+            )
+        else:
+            log_entry = LogEntry.objects.log_actions(
+                self.user.pk, [self.user], CHANGE, "Changed user"
             )
         self.assertEqual(log_entry, LogEntry.objects.first())
         self.assertEqual(LogEntry.objects.count(), 1)
@@ -125,9 +131,7 @@ class NoLogEntryManagerTest(TestCase):
                 CHANGE,
             )
         else:
-            log_entry = LogEntry.objects.log_actions(
-                self.user.pk, [self.user], CHANGE, single_object=True
-            )
+            log_entry = LogEntry.objects.log_actions(self.user.pk, [self.user], CHANGE)
         # Ensure there was no log entry created for the action
         self.assertEqual(log_entry, None)
         self.assertEqual(LogEntry.objects.count(), 0)

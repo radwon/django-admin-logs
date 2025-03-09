@@ -1,6 +1,12 @@
 Changelog
 =========
 
+Unreleased (TBD)
+------------------
+* Added support for Django 5.1.7 which made a backwards incompatible change by
+  removing the `single_object` kwarg from the `LogEntry.log_actions()` method
+  (`#36217 <https://code.djangoproject.com/ticket/36217>`_).
+
 1.3.0 (2024-08-10)
 ------------------
 * Added support for Django 5.1

@@ -53,7 +53,7 @@ options can be configured by adding the following to your ``settings`` file.
 
     DJANGO_ADMIN_LOGS_DELETABLE = True
 
-This allows super users, or any staff users with the delete_logentry
+This allows a superuser, or any staff user with the delete_logentry
 permission, to delete log entries from within the admin interface.
 
 .. code-block:: python

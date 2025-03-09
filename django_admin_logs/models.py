@@ -43,19 +43,13 @@ class ChangedLogEntryManager(LogEntryManager):
                 change_message,
             )
 
-    def log_actions(
-        self, user_id, queryset, action_flag, change_message="", *, single_object=False
-    ):
+    def log_actions(self, user_id, queryset, action_flag, change_message="", **kwargs):
         # Check whether this is a log with no changes that should be ignored
         if action_flag == models.CHANGE and not change_message:
             return None
         else:  # Log as normal
             return super().log_actions(
-                user_id,
-                queryset,
-                action_flag,
-                change_message,
-                single_object=single_object,
+                user_id, queryset, action_flag, change_message, **kwargs
             )
 
 
