@@ -44,19 +44,27 @@ class ChangedLogEntryManager(LogEntryManager):
             )
 
     def log_actions(
-        self, user_id, queryset, action_flag, change_message="", *, single_object=False
+        self, user_id, queryset, action_flag, change_message="", single_object=False
     ):
         # Check whether this is a log with no changes that should be ignored
         if action_flag == models.CHANGE and not change_message:
             return None
         else:  # Log as normal
-            return super().log_actions(
-                user_id,
-                queryset,
-                action_flag,
-                change_message,
-                single_object=single_object,
-            )
+            if django.VERSION < (5, 1, 7):
+                return super().log_actions(
+                    user_id,
+                    queryset,
+                    action_flag,
+                    change_message,
+                    single_object=single_object,
+                )
+            else:
+                return super().log_actions(
+                    user_id,
+                    queryset,
+                    action_flag,
+                    change_message,
+                )
 
 
 class NoLogEntryManager(LogEntryManager):
@@ -68,6 +76,8 @@ class NoLogEntryManager(LogEntryManager):
 
     def log_actions(self, *args, **kwargs):
         # No logging
+        if django.VERSION < (5, 1, 7):
+            kwargs.pop('single_object', None)
         return None
 
     def get_queryset(self):

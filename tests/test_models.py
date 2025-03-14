@@ -40,9 +40,7 @@ class LogEntryManagerTest(TestCase):
                 CHANGE,
             )
         else:
-            log_entry = LogEntry.objects.log_actions(
-                self.user.pk, [self.user], CHANGE, single_object=True
-            )
+            log_entry = LogEntry.objects.log_actions(self.user.pk, [self.user], CHANGE)
         # Ensure the log entry was created for the action
         self.assertEqual(log_entry, LogEntry.objects.first())
         self.assertEqual(LogEntry.objects.count(), 1)
@@ -76,7 +74,7 @@ class ChangedLogEntryManagerTest(TestCase):
             )
         else:
             log_entry = LogEntry.objects.log_actions(
-                self.user.pk, [self.user], CHANGE, "", single_object=True
+                self.user.pk, [self.user], CHANGE, ""
             )
         # Ensure there was no log entry created for the action
         self.assertEqual(log_entry, None)
@@ -93,9 +91,29 @@ class ChangedLogEntryManagerTest(TestCase):
             )
         else:
             log_entry = LogEntry.objects.log_actions(
-                self.user.pk, [self.user], CHANGE, "Changed user", single_object=True
+                self.user.pk, [self.user], CHANGE, "Changed user"
             )
         self.assertEqual(log_entry, LogEntry.objects.first())
+        self.assertEqual(LogEntry.objects.count(), 1)
+
+    @mock.patch("django_admin_logs.settings.DJANGO_ADMIN_LOGS_IGNORE_UNCHANGED", True)
+    def test_log_actions_with_single_object(self):
+        """Test log_actions with single_object argument for Django < 5.1.7."""
+        # Re-run the app config ready() method to use the test settings
+        apps.get_app_config("django_admin_logs").ready()
+        # Ensure there are no log entries yet
+        self.assertEqual(LogEntry.objects.count(), 0)
+        # Create a log entry with changes
+        if django.VERSION < (5, 1, 7):
+            log_entry = LogEntry.objects.log_actions(
+                self.user.pk, [self.user], CHANGE, "Changed user", single_object=True
+            )
+        else:
+            log_entry = LogEntry.objects.log_actions(
+                self.user.pk, [self.user], CHANGE, "Changed user"
+            )
+        # Ensure the log entry was created for the action
+        self.assertIsNotNone(log_entry)
         self.assertEqual(LogEntry.objects.count(), 1)
 
 
@@ -125,9 +143,43 @@ class NoLogEntryManagerTest(TestCase):
                 CHANGE,
             )
         else:
+            log_entry = LogEntry.objects.log_actions(self.user.pk, [self.user], CHANGE)
+        # Ensure there was no log entry created for the action
+        self.assertEqual(log_entry, None)
+        self.assertEqual(LogEntry.objects.count(), 0)
+
+    @mock.patch("django_admin_logs.settings.DJANGO_ADMIN_LOGS_ENABLED", False)
+    def test_no_log_actions_with_single_object(self):
+        """Test no log_actions with single_object argument for Django < 5.1.7."""
+        # Re-run the app config ready() method to use the test settings
+        apps.get_app_config("django_admin_logs").ready()
+        # Ensure there are no log entries yet
+        self.assertEqual(LogEntry.objects.count(), 0)
+        # Attempt to create a log entry when admin logs are disabled
+        if django.VERSION < (5, 1, 7):
             log_entry = LogEntry.objects.log_actions(
                 self.user.pk, [self.user], CHANGE, single_object=True
             )
+        else:
+            log_entry = LogEntry.objects.log_actions(self.user.pk, [self.user], CHANGE)
+        # Ensure there was no log entry created for the action
+        self.assertEqual(log_entry, None)
+        self.assertEqual(LogEntry.objects.count(), 0)
+
+    @mock.patch("django_admin_logs.settings.DJANGO_ADMIN_LOGS_ENABLED", False)
+    def test_no_log_actions_with_kwargs(self):
+        """Test log_actions with kwargs for Django < 5.1.7."""
+        # Re-run the app config ready() method to use the test settings
+        apps.get_app_config("django_admin_logs").ready()
+        # Ensure there are no log entries yet
+        self.assertEqual(LogEntry.objects.count(), 0)
+        # Attempt to create a log entry when admin logs are disabled
+        if django.VERSION < (5, 1, 7):
+            log_entry = LogEntry.objects.log_actions(
+                self.user.pk, [self.user], CHANGE, single_object=True
+            )
+        else:
+            log_entry = LogEntry.objects.log_actions(self.user.pk, [self.user], CHANGE)
         # Ensure there was no log entry created for the action
         self.assertEqual(log_entry, None)
         self.assertEqual(LogEntry.objects.count(), 0)

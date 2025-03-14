@@ -98,3 +98,8 @@ To run tests for specific versions e.g. Python 3.10 and Django 4.2:
 .. code-block:: bash
 
     tox -e py310-django42
+
+Compatibility
+=============
+
+This package has been updated to handle the removal of the `single_object` argument in Django 5.1.7. The code conditionally includes or excludes this argument based on the Django version to ensure compatibility with versions both before and after Django 5.1.7.

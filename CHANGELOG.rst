@@ -1,6 +1,12 @@
 Changelog
 =========
 
+Version 1.4.0
+-------------
+
+- Updated `ChangedLogEntryManager` and `NoLogEntryManager` to handle the removal of the `single_object` argument in Django 5.1.7.
+- Ensured compatibility with Django versions both before and after 5.1.7.
+
 1.3.0 (2024-08-10)
 ------------------
 * Added support for Django 5.1
