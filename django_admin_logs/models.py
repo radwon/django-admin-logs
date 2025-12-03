@@ -12,7 +12,7 @@ class LogEntryManager(models.LogEntryManager):
     def __init__(self, model=None):
         super().__init__()
         self.model = model
-        if django.VERSION >= (5, 1):
+        if django.VERSION >= (5, 1) and django.VERSION < (6, 0):  # pragma: no cover
             # Prevent RemovedInDjango60Warning by reverting deprecated method
             type(self).log_action = models.LogEntryManager.log_action
 

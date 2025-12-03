@@ -31,6 +31,7 @@ class LogEntryAdmin(admin.ModelAdmin):
         "object_link",
     )
     list_filter = (
+        "action_time",
         "action_flag",
         ("content_type", admin.RelatedOnlyFieldListFilter),
         ("user", admin.RelatedOnlyFieldListFilter),
@@ -102,6 +103,6 @@ class LogEntryAdmin(admin.ModelAdmin):
         pass
 
 
-# Register the LogEntry admin if enabled
-if DJANGO_ADMIN_LOGS_ENABLED:
+# Register the LogEntry admin if enabled and not already registered
+if DJANGO_ADMIN_LOGS_ENABLED and not admin.site.is_registered(LogEntry):
     admin.site.register(LogEntry, LogEntryAdmin)

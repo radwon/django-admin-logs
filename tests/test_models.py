@@ -39,12 +39,12 @@ class LogEntryManagerTest(TestCase):
                 repr(self.user),
                 CHANGE,
             )
-        elif django.VERSION < (5, 1, 7):
-            log_entry = LogEntry.objects.log_actions(
-                self.user.pk, [self.user], CHANGE, single_object=True
-            )
         else:
-            log_entry = LogEntry.objects.log_actions(self.user.pk, [self.user], CHANGE)
+            log_entry = LogEntry.objects.log_actions(
+                self.user.pk,
+                [self.user],
+                CHANGE,
+            )[0]
         # Ensure the log entry was created for the action
         self.assertEqual(log_entry, LogEntry.objects.first())
         self.assertEqual(LogEntry.objects.count(), 1)
@@ -93,14 +93,10 @@ class ChangedLogEntryManagerTest(TestCase):
                 CHANGE,
                 "Changed user",
             )
-        elif django.VERSION < (5, 1, 7):
-            log_entry = LogEntry.objects.log_actions(
-                self.user.pk, [self.user], CHANGE, "Changed user", single_object=True
-            )
         else:
             log_entry = LogEntry.objects.log_actions(
                 self.user.pk, [self.user], CHANGE, "Changed user"
-            )
+            )[0]
         self.assertEqual(log_entry, LogEntry.objects.first())
         self.assertEqual(LogEntry.objects.count(), 1)
 

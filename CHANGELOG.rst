@@ -1,6 +1,11 @@
 Changelog
 =========
 
+Unreleased (TBD)
+------------------
+* Added support for Django 5.2 and Django 6.0
+* Dropped support for Django 5.0 and Django 5.1
+
 1.4.0 (2025-03-16)
 ------------------
 * Added support for Django 5.1.7 which made a backwards incompatible change by

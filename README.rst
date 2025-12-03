@@ -93,8 +93,8 @@ To run tests for all supported Python and Django versions using tox:
 
     tox
 
-To run tests for specific versions e.g. Python 3.10 and Django 4.2:
+To run tests for specific versions e.g. Python 3.12 and Django 5.2:
 
 .. code-block:: bash
 
-    tox -e py310-django42
+    tox -e py312-django52
