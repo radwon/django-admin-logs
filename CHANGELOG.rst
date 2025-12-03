@@ -1,7 +1,7 @@
 Changelog
 =========
 
-Unreleased (TBD)
+1.5.0 (2025-12-03)
 ------------------
 * Added support for Django 5.2 and Django 6.0
 * Dropped support for Django 5.0 and Django 5.1
